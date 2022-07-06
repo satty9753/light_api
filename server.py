@@ -1,6 +1,5 @@
 from socket import socket
 from fastapi import FastAPI
-#from fastapi_socketio import SocketManager
 import socketio
 from typing import Optional
 from fastapi import FastAPI, Header
@@ -10,8 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 #import jwt
 
 app = FastAPI()
-#sio = SocketManager(app=app, cors_allowed_origins=['*'])
-sio = socketio.AsyncServer(async_mode="asgi")
+sio = socketio.AsyncServer(async_mode="asgi", cors_allowed_origins=['*'])
 socket_app = socketio.ASGIApp(sio)
 app.mount("/", socket_app)
 

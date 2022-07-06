@@ -3,7 +3,7 @@ asgiref==3.4.1
 autopep8==1.6.0
 bidict==0.22.0
 click==8.0.3
-fastapi==0.72.0p
+fastapi==0.72.0
 h11==0.12.0
 idna==3.3
 pycodestyle==2.8.0
