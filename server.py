@@ -9,7 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 #import jwt
 
 app = FastAPI()
-sio = socketio.AsyncServer(async_mode="asgi", cors_allowed_origins=['*'])
+sio = socketio.AsyncServer(async_mode="asgi", cors_allowed_origins='*', logger=True, engineio_logger=True)
 socket_app = socketio.ASGIApp(sio)
 app.mount("/", socket_app)
 
@@ -33,7 +33,7 @@ def home():
     return "hello!"
 
 @sio.event
-def connect(sid, environ, auth):
+def connect(sid, environ):
     print('connect ', sid)
 
 @sio.on('join')
