@@ -5,6 +5,7 @@ from typing import Optional
 from fastapi import FastAPI, Header
 from pydantic import BaseModel
 import uvicorn
+import control as controller
 from fastapi.middleware.cors import CORSMiddleware
 #import jwt
 
@@ -24,9 +25,9 @@ app.add_middleware(
 )
 
 
-# @app.get("/")
-# def firstPage():
-#     return "hello!"
+@app.get("/")
+def firstPage():
+    return "hello!"
 
 @app.get("/home")
 def home():
@@ -36,22 +37,23 @@ def home():
 def connect(sid, environ):
     print('connect ', sid)
 
-@sio.on('join')
-async def join(sid, data):
-    print('join', sid)
-    await sio.emit('lobby', 'User join')
+@sio.event
+def disconnect(sid):
+    print('disconnect ', sid)
 
 @sio.on('light')
-async def changeLightStatus(sid, data):
-    print('light', sid, data)
+async def pressLightBtn(sid, data):
+    print('pressLightBtn', sid, data)
     username = data['username']
     lightOn = data['lightOn']
     lightOnLabel = ''
     if lightOn == True:
         lightOnLabel = 'on'
+        controller.turnOnLight()
     else:
         lightOnLabel = 'off'
-    await sio.emit('record', {'message' : f'{username} has turned {lightOnLabel} the light.'})
+        controller.turnOffLight()
+    await sio.emit('record', {'message' : f'{username} has turned {lightOnLabel} the light.', 'lightOn': controller.lightOn})
 
 if __name__ == '__main__':
     uvicorn.run(app, host="0.0.0.0", port=80)
