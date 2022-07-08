@@ -5,9 +5,10 @@ from typing import Optional
 from fastapi import FastAPI, Header
 from pydantic import BaseModel
 import uvicorn
-import control as controller
+#import control as controller
+from fakeControl import LightController
 from fastapi.middleware.cors import CORSMiddleware
-#import jwt
+
 
 app = FastAPI()
 sio = socketio.AsyncServer(async_mode="asgi", cors_allowed_origins='*', logger=True, engineio_logger=True)
@@ -47,6 +48,7 @@ async def pressLightBtn(sid, data):
     username = data['username']
     lightOn = data['lightOn']
     lightOnLabel = ''
+    controller = LightController()
     if lightOn == True:
         lightOnLabel = 'on'
         controller.turnOnLight()
@@ -56,4 +58,4 @@ async def pressLightBtn(sid, data):
     await sio.emit('record', {'message' : f'{username} has turned {lightOnLabel} the light.', 'lightOn': controller.lightOn})
 
 if __name__ == '__main__':
-    uvicorn.run(app, host="0.0.0.0", port=80)
+    uvicorn.run(app, host="0.0.0.0", port=3000)

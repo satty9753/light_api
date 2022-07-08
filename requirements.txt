@@ -23,4 +23,3 @@ uvicorn==0.17.0
 uvloop==0.16.0
 watchfiles==0.15.0
 websockets==10.3
-RPi.GPIO==0.7.1
