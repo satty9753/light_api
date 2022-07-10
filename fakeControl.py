@@ -12,3 +12,5 @@ class LightController:
 
     def turnOffLight(self):  
         self.lightOn = False
+
+controller = LightController()
