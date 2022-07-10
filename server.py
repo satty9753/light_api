@@ -31,10 +31,6 @@ app.add_middleware(
 def firstPage():
     return "hello!"
 
-@app.get("/home")
-def home():
-    return "hello!"
-
 @sio.event
 def connect(sid, environ):
     print('connect ', sid)
@@ -46,7 +42,6 @@ def disconnect(sid):
 @sio.on('lightStatus')
 async def getLightStatus(sid, data):
     print('getLightStatus')
-    
     await sio.emit('record', {'lightOn': controller.lightOn })
 
 @sio.on('light')

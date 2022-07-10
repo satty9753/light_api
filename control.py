@@ -16,6 +16,8 @@ class LightController:
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
         GPIO.setup(self.pin, GPIO.OUT)
+        #GPIO.setup(self.pin, GPIO.IN)
+        self.getLightStatus()
 
     def turnOnLight(self):
         GPIO.output(self.pin, GPIO.HIGH)
@@ -24,3 +26,10 @@ class LightController:
     def turnOffLight(self):  
         GPIO.output(self.pin, GPIO.LOW)
         self.lightOn = False
+
+    def getLightStatus(self):
+        lightStatus = GPIO.input(self.pin)
+        if lightStatus == 1:
+            self.lightOn = True
+        else:
+            self.lightOn = False
