@@ -5,8 +5,8 @@ from typing import Optional
 from fastapi import FastAPI, Header
 from pydantic import BaseModel
 import uvicorn
-from control import LightController
-#from fakeControl import LightController
+# from control import LightController
+from fakeControl import LightController
 from fastapi.middleware.cors import CORSMiddleware
 
 
