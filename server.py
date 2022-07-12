@@ -1,12 +1,16 @@
 from socket import socket
+from time import timezone
 from fastapi import FastAPI
 import socketio
 from typing import Optional
 from fastapi import FastAPI, Header
 from pydantic import BaseModel
 import uvicorn
-# from control import LightController
-from fakeControl import LightController
+from datetime import datetime
+from control import LightController
+import locale
+from dateutil import tz
+#from fakeControl import LightController
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -50,13 +54,17 @@ async def pressLightBtn(sid, data):
     username = data['username']
     lightOn = data['lightOn']
     lightOnLabel = ''
+    now = datetime.utcnow()
+    zone = "Asia/Taipei"
+    dtZone = now.astimezone(tz.gettz(zone))
+    timeLabel = dtZone.strftime('%H:%M:%S')
     if lightOn == True:
-        lightOnLabel = 'on'
+        lightOnLabel = '開'
         controller.turnOnLight()
     else:
-        lightOnLabel = 'off'
+        lightOnLabel = '關'
         controller.turnOffLight()
-    await sio.emit('record', {'message' : f'{username} has turned {lightOnLabel} the light.', 'lightOn': controller.lightOn})
+    await sio.emit('record', {'message' : f'[{timeLabel}] {username} {lightOnLabel}了燈', 'lightOn': controller.lightOn})
 
 if __name__ == '__main__':
     uvicorn.run(app, host="0.0.0.0", port=3000)
