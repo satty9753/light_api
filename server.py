@@ -8,7 +8,6 @@ from pydantic import BaseModel
 import uvicorn
 from datetime import datetime
 from control import LightController
-import locale
 from dateutil import tz
 #from fakeControl import LightController
 from fastapi.middleware.cors import CORSMiddleware
