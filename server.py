@@ -30,9 +30,9 @@ app.add_middleware(
 )
 
 
-@app.get("/")
-def firstPage():
-    return "hello!"
+# @app.get("/")
+# def firstPage():
+#     return "hello!"
 
 @sio.event
 def connect(sid, environ):
