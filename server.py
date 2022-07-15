@@ -17,7 +17,7 @@ app = FastAPI()
 controller = LightController()
 sio = socketio.AsyncServer(async_mode="asgi", cors_allowed_origins='*', logger=True, engineio_logger=True)
 socket_app = socketio.ASGIApp(sio)
-app.mount("/", socket_app)
+app.mount("/connect", socket_app, name='connect')
 
 origins = ["*"]
 
@@ -30,9 +30,9 @@ app.add_middleware(
 )
 
 
-# @app.get("/")
-# def firstPage():
-#     return "hello!"
+@app.get("/test")
+def firstPage():
+    return "test"
 
 @sio.event
 def connect(sid, environ):
