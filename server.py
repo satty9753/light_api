@@ -9,11 +9,11 @@ from fastapi import FastAPI, Header
 from pydantic import BaseModel
 import uvicorn
 from datetime import datetime
-#from control import LightController
+from control import LightController
 from dateutil import tz
-from fakeControl import LightController
+# from fakeControl import LightController
 from fastapi.middleware.cors import CORSMiddleware
-
+import time
 
 app = FastAPI()
 controller = LightController()
@@ -31,6 +31,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.get("/test")
+def firstPage():
+    return "test"
 
 @sio.event
 def connect(sid, environ):
