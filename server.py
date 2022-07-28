@@ -74,7 +74,7 @@ async def pressLightBtn(sid, data):
             controller.timeInterval = requestNowTime
             await sio.emit('record', {'message' : f'[{timeLabel}] {username} 成功{lightOnLabel}了燈', 'lightOn': controller.lightOn})
         else:
-            await sio.emit('record', {'message' : f'[{timeLabel}] {username} {lightOnLabel}燈失敗，其他人正在操作', 'lightOn': controller.lightOn})
+            await sio.emit('record', {'message' : f'[{timeLabel}] {username} {lightOnLabel}燈失敗，請間隔一秒再操作', 'lightOn': controller.lightOn})
 
 def getlightOnLabel(lightOn):
     if lightOn == True:
