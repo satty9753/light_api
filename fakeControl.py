@@ -8,6 +8,7 @@ class LightController:
     def __init__(self):
         self.lightOn = False
         self.pin = 23
+        self.timeInterval = 0
         self.setup()
         
     def setup(self):
