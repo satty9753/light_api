@@ -54,11 +54,11 @@ async def pressLightBtn(sid, data):
     print('pressLightBtn', sid, data)
     username = data['username']
     lightOn = data['lightOn']
-    now = datetime.utcnow()
+    requestNowTime = time.time()
+    now = datetime.fromtimestamp(requestNowTime)
     zone = "Asia/Taipei"
     dtZone = now.astimezone(tz.gettz(zone))
     timeLabel = dtZone.strftime('%H:%M:%S')
-    requestNowTime = time.time()
     interval = requestNowTime - controller.timeInterval
     lightOnLabel = getlightOnLabel(lightOn)
     # 與現在同狀態
